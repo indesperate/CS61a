@@ -1,3 +1,10 @@
+# ok files
+tests
+construct_check.py
+*.ok
+.ok*
+ok
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
