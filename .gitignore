@@ -1,5 +1,4 @@
 # ok files
-tests
 construct_check.py
 *.ok
 .ok*
