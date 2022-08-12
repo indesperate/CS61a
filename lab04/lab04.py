@@ -22,6 +22,7 @@ def summation(n, term):
     if n == 1:
         return term(1)
     return term(n) + summation(n - 1, term)
+    #return reduce(add,[term[i] for i in range(n,0,-1)])
 
 
 def pascal(row, column):
@@ -85,7 +86,7 @@ def coords(fn, seq, lower, upper):
     [[-2, 4], [1, 1], [3, 9]]
     """
     #list comprehensions
-    return [[x, fn(x)] for x in seq if fn(x) >= 1 and fn(x) <= 9]
+    return [[x, fn(x)] for x in seq if fn(x) >= lower and fn(x) <= upper]
 
 
 def riffle(deck):
