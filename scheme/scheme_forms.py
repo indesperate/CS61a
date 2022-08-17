@@ -1,3 +1,4 @@
+from ast import expr
 from scheme_eval_apply import *
 from scheme_utils import *
 from scheme_classes import *
@@ -124,7 +125,14 @@ def do_and_form(expressions, env):
     False
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if not expressions:
+        return True
+    while expressions.rest:
+        if  scheme_eval(expressions.first, env) is False:
+            return scheme_eval(expressions.first, env)
+        else:
+            expressions = expressions.rest
+    return scheme_eval(expressions.first, env)
     # END PROBLEM 12
 
 
@@ -143,7 +151,14 @@ def do_or_form(expressions, env):
     6
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if not expressions:
+        return False
+    while expressions.rest:
+        if scheme_eval(expressions.first, env) is not False:
+            return scheme_eval(expressions.first, env)
+        else:
+            expressions = expressions.rest
+    return scheme_eval(expressions.first, env)
     # END PROBLEM 12
 
 
@@ -164,7 +179,9 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if is_scheme_true(test):
             # BEGIN PROBLEM 13
-            "*** YOUR CODE HERE ***"
+            if not clause.rest:
+                return test
+            return eval_all(clause.rest, env)
             # END PROBLEM 13
         expressions = expressions.rest
 
@@ -190,7 +207,16 @@ def make_let_frame(bindings, env):
         raise SchemeError('bad bindings list in let form')
     names = values = nil
     # BEGIN PROBLEM 14
-    "*** YOUR CODE HERE ***"
+    while bindings:
+        validate_form(bindings.first,0,2)
+        name = bindings.first.first
+        value = eval_all(bindings.first.rest, env)
+        if value is None:
+            raise SchemeError('bad bindings list in let form')
+        names = Pair(name,names)
+        validate_formals(names)
+        values = Pair(value, values)
+        bindings = bindings.rest
     # END PROBLEM 14
     return env.make_child_frame(names, values)
 
