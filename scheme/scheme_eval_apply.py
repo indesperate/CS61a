@@ -129,7 +129,7 @@ def optimize_tail_calls(original_scheme_eval):
 
         result = Unevaluated(expr, env)
         # BEGIN PROBLEM EC
-        "*** YOUR CODE HERE ***"
+        return original_scheme_eval(expr, env)
         # END PROBLEM EC
     return optimized_eval
 
