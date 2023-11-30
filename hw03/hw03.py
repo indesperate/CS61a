@@ -236,4 +236,4 @@ def make_anonymous_factorial():
     #else:
     #    return n * f(f)(n-1)
     #fact(fact)(9)
-    return (lambda f: lambda n: f(f)(n))(lambda f: lambda n: 1 if n == 1 else n * f(f)(n - 1))
+    return (lambda f: f(f))(lambda f: lambda n: 1 if n == 1 else n * f(f)(n - 1))
