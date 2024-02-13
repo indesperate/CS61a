@@ -124,12 +124,17 @@ def optimize_tail_calls(original_scheme_eval):
         """Evaluate Scheme expression EXPR in Frame ENV. If TAIL,
         return an Unevaluated containing an expression for further evaluation.
         """
+        # there is no need for store the frame before this call, cause it's a tail call
+        # it should just return the result to restore the stack instead of recursive call
         if tail and not scheme_symbolp(expr) and not self_evaluating(expr):
             return Unevaluated(expr, env)
-
+        
         result = Unevaluated(expr, env)
         # BEGIN PROBLEM EC
-        return original_scheme_eval(expr, env)
+        # while loop to eval the Unevaluated, since scheme_eval is changed to optimize_tail_calls(scheme_eval)
+        while isinstance(result, Unevaluated):
+            result = original_scheme_eval(result.expr, result.env)
+        return result
         # END PROBLEM EC
     return optimized_eval
 
